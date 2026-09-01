@@ -1,0 +1,31 @@
+# env / 敏感信息
+.env
+*.env
+!.env.example
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+
+# 数据 / 模型缓存
+data/raw/
+data/artifacts/
+data/cache/
+~/.cache/huggingface/
+*.bin
+*.pt
+*.pkl
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# 构建日志
+*.log

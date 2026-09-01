@@ -1,0 +1,25 @@
+# 虚拟环境 / 构建产物
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+
+# 数据 / 模型缓存（不打包进镜像；Docker 内自建或由 API 运行时摄入）
+data/raw/
+data/artifacts/
+data/cache/
+*.bin
+*.pt
+*.pkl
+
+# 敏感 / 环境
+.env
+*.env
+
+# 版本控制
+.git/
+.gitignore

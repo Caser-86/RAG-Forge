@@ -1,0 +1,30 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: ragforge-qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+  api:
+    build: .
+    container_name: ragforge-api
+    env_file:
+      - .env
+    environment:
+      RAG_VECTOR_STORE: qdrant
+      RAG_QDRANT_URL: http://qdrant:6333
+      RAG_EMBEDDER_MODEL: /models/BAAI--bge-m3/snapshots/master
+      RAG_RERANK_MODEL: /models/BAAI--bge-reranker-base/snapshots/master
+    volumes:
+      # 挂载宿主机已下载的 bge 缓存；换机器/路径请改冒号左侧
+      - C:/Users/MR/.cache/modelscope/models:/models:ro
+    ports:
+      # 宿主机 8000 常被 Docker Desktop 内部进程占用，改映射到 8001；访问 http://localhost:8001
+      - "8001:8000"
+    command: uvicorn ragforge.api.main:app --host 0.0.0.0 --port 8000
+    depends_on:
+      - qdrant
+
+volumes:
+  qdrant_data:
