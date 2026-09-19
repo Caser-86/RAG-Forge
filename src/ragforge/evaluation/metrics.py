@@ -2,30 +2,79 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Literal
 
 from ..models import Evidence
 
-
 # ---------- 检索层指标 ----------
 
-def hit_at_k(evidences: list[Evidence], gold_ids: set[str], k: int | None = None) -> bool:
+def retrieval_identifier(
+    evidences: list[Evidence], *, by: Literal["chunk", "document"] = "chunk"
+) -> list[str]:
+    """返回按排名去重的 chunk/document 标识，保留首次出现的排序。"""
+    if by not in {"chunk", "document"}:
+        raise ValueError("by must be chunk or document")
+    ids: list[str] = []
+    seen: set[str] = set()
+    for evidence in evidences:
+        identifier = evidence.chunk.id if by == "chunk" else evidence.chunk.doc_id
+        if identifier not in seen:
+            ids.append(identifier)
+            seen.add(identifier)
+    return ids
+
+
+def hit_at_k(
+    evidences: list[Evidence], gold_ids: set[str], k: int | None = None,
+    *, by: Literal["chunk", "document"] = "chunk",
+) -> bool:
     hits = evidences if k is None else evidences[:k]
-    return any(e.chunk.id in gold_ids for e in hits)
+    return bool(set(retrieval_identifier(hits, by=by)) & gold_ids)
 
 
-def recall_at_k(evidences: list[Evidence], gold_ids: set[str], k: int | None = None) -> float:
+def recall_at_k(
+    evidences: list[Evidence], gold_ids: set[str], k: int | None = None,
+    *, by: Literal["chunk", "document"] = "chunk",
+) -> float:
     if not gold_ids:
         return 0.0
     hits = evidences if k is None else evidences[:k]
-    hit_ids = {e.chunk.id for e in hits}
+    hit_ids = set(retrieval_identifier(hits, by=by))
     return len(hit_ids & gold_ids) / len(gold_ids)
 
 
-def mrr(evidences: list[Evidence], gold_ids: set[str]) -> float:
-    for rank, e in enumerate(evidences, start=1):
-        if e.chunk.id in gold_ids:
+def mrr(
+    evidences: list[Evidence], gold_ids: set[str],
+    *, by: Literal["chunk", "document"] = "chunk",
+) -> float:
+    for rank, identifier in enumerate(retrieval_identifier(evidences, by=by), start=1):
+        if identifier in gold_ids:
             return 1.0 / rank
     return 0.0
+
+
+def citation_validity(valid: int, total: int, *, ran: bool) -> float | None:
+    """合法引用率；未运行返回 None，零引用运行返回 0 而非伪造 100%。"""
+    if not ran:
+        return None
+    if total <= 0:
+        return 0.0
+    return max(0, valid) / total
+
+
+def refusal_confusion(rows: list[tuple[bool, bool]]) -> dict[str, int]:
+    """按 (answerable, predicted_refused) 统计拒答混淆矩阵。"""
+    matrix = {"true_positive": 0, "true_negative": 0, "false_positive": 0, "false_negative": 0}
+    for answerable, refused in rows:
+        if not answerable and refused:
+            matrix["true_positive"] += 1
+        elif answerable and not refused:
+            matrix["true_negative"] += 1
+        elif answerable and refused:
+            matrix["false_positive"] += 1
+        else:
+            matrix["false_negative"] += 1
+    return matrix
 
 
 # ---------- 生成层指标 ----------

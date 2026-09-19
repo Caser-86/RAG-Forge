@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0e151b">
+    <title>RAG-Forge · Local knowledge workbench</title>
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/static/app.css">
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="masthead">
+      <a class="brand" href="/" aria-label="RAG-Forge 首页">
+        <span class="brand-mark">RF</span>
+        <span><strong>RAG—FORGE</strong><small>LOCAL KNOWLEDGE WORKBENCH</small></span>
+      </a>
+      <nav class="view-nav" aria-label="工作台视图">
+        <button class="view-tab is-active" data-view="chat" aria-selected="true">Chat</button>
+        <button class="view-tab" data-view="debug" aria-selected="false">Debug</button>
+        <button class="view-tab" data-view="settings" aria-selected="false">Settings</button>
+      </nav>
+      <div class="health-chip" aria-live="polite">
+        <span id="healthDot" class="health-dot is-pending"></span>
+        <span id="healthText">CONNECTING</span>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section id="view-chat" class="view is-active" data-view-panel="chat">
+        <div class="hero-copy">
+          <p class="eyebrow">EVIDENCE-FIRST / LOCAL ONLY</p>
+          <h1>让文档先说话，<em>再让模型回答。</em></h1>
+          <p class="hero-lede">在你的本地语料里检索、核对和追踪每一次回答。证据不足时，工作台会明确停下来。</p>
+        </div>
+
+        <section class="control-deck" aria-label="问答设置">
+          <div class="control-block model-control">
+            <label for="modelSelect">生成模型</label>
+            <select id="modelSelect" disabled>
+              <option value="">等待模型清单…</option>
+            </select>
+            <span id="modelHint" class="control-note">服务启动后读取 allowlist</span>
+          </div>
+          <div class="control-block">
+            <label for="modeSelect">检索路径</label>
+            <select id="modeSelect">
+              <option value="hybrid">Hybrid · Dense + BM25</option>
+              <option value="dense">Dense · 语义检索</option>
+              <option value="hybrid_rerank">Hybrid + Rerank</option>
+            </select>
+          </div>
+          <div class="control-block compact-control">
+            <label for="topK">Top-K</label>
+            <input id="topK" type="number" min="1" max="20" value="5" inputmode="numeric">
+          </div>
+          <div class="control-block rewrite-control">
+            <label class="switch-label" for="rewriteToggle">Query Rewrite</label>
+            <label class="switch">
+              <input id="rewriteToggle" type="checkbox">
+              <span class="switch-track"></span>
+            </label>
+            <span class="control-note">可选 · 默认 OFF</span>
+          </div>
+          <button id="clearButton" class="quiet-button" type="button">清空会话</button>
+        </section>
+
+        <section id="conversation" class="conversation" aria-live="polite" aria-label="对话记录">
+          <div id="emptyState" class="empty-state">
+            <span class="empty-index">01</span>
+            <div>
+              <strong>准备好检索</strong>
+              <p>试试：“项目的默认分块大小是多少？”</p>
+            </div>
+          </div>
+        </section>
+
+        <form id="chatForm" class="composer">
+          <label for="queryInput" class="sr-only">输入问题</label>
+          <textarea id="queryInput" rows="2" maxlength="4000" placeholder="问你的本地文档…" required></textarea>
+          <div class="composer-footer">
+            <span>Enter 发送 · Shift + Enter 换行</span>
+            <div class="composer-actions">
+              <button id="retryButton" class="quiet-button" type="button" hidden>重试上一问</button>
+              <button id="saveButton" class="quiet-button" type="button" disabled>保存本次结果</button>
+              <button id="sendButton" class="send-button" type="submit" disabled>
+                <span>发送问题</span><span class="send-arrow" aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </div>
+        </form>
+        <p id="errorMessage" class="error-message" role="alert" hidden></p>
+      </section>
+
+      <section id="view-debug" class="view debug-view" data-view-panel="debug" hidden>
+        <div class="section-heading">
+          <div><p class="eyebrow">TRACE RAIL</p><h2>一条回答的证据轨迹</h2></div>
+          <span id="debugTraceId" class="trace-id">尚未选择 Trace</span>
+        </div>
+        <div id="debugEmpty" class="debug-empty">发送一条问题后，这里会显示实际候选、最终 context 和各阶段耗时。</div>
+        <div id="debugContent" hidden>
+          <div id="debugMetrics" class="metric-grid"></div>
+          <div class="debug-grid">
+            <section class="debug-card">
+              <div class="card-kicker">CANDIDATES / SCORES</div>
+              <div id="debugCandidates" class="candidate-list"></div>
+            </section>
+            <section class="debug-card context-card">
+              <div class="card-kicker">FINAL CONTEXT · MODEL INPUT</div>
+              <pre id="debugContext" class="context-preview"></pre>
+            </section>
+          </div>
+          <section class="debug-card raw-card">
+            <div class="card-kicker">RAW OUTPUT · RETAINED FOR REVIEW</div>
+            <pre id="debugRaw" class="context-preview"></pre>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-settings" class="view settings-view" data-view-panel="settings" hidden>
+        <div class="section-heading">
+          <div><p class="eyebrow">LOCAL SESSION</p><h2>把控制权留在这台机器上</h2></div>
+        </div>
+        <form id="settingsForm" class="settings-card">
+          <label for="apiKeyInput">API key</label>
+          <input id="apiKeyInput" type="password" autocomplete="off" spellcheck="false" placeholder="如果服务端配置了 key，在此临时输入">
+          <p>只保存在当前浏览器页的内存中，用于请求 header；不会写入 URL、HTML 或 localStorage。</p>
+          <div class="settings-actions">
+            <button id="saveKeyButton" class="send-button" type="button">在本页启用</button>
+            <button id="clearKeyButton" class="quiet-button" type="button">清除 key</button>
+            <span id="settingsNotice" class="control-note" role="status"></span>
+          </div>
+        </form>
+        <div class="settings-card compact-card">
+          <span class="card-kicker">CAPABILITY NOTE</span>
+          <p>Query Rewrite 当前固定关闭；切换生成模型只影响下一次请求，不会触发重新索引。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-line">
+      <span>RAG-FORGE / v0.1.0</span><span>TRACEABLE BY DEFAULT</span>
+    </footer>
+    <noscript><div class="noscript">需要启用 JavaScript 才能使用本地问答工作台。</div></noscript>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

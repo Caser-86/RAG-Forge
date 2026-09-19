@@ -1,0 +1,22 @@
+{"id":"a-01","query":"系统使用什么向量数据库？","answer":"系统使用 Qdrant 作为向量数据库。"}
+{"id":"a-02","query":"默认检索模式是什么？","answer":"默认检索模式是 hybrid。"}
+{"id":"a-03","query":"默认分块大小是多少？","answer":"默认分块大小是 2200 个字符。"}
+{"id":"a-04","query":"分块重叠大小是多少？","answer":"默认重叠大小是 200 个字符。"}
+{"id":"a-05","query":"稠密检索候选数是多少？","answer":"稠密检索候选数是 20。"}
+{"id":"a-06","query":"稀疏检索候选数是多少？","answer":"稀疏检索候选数是 20。"}
+{"id":"a-07","query":"默认返回多少条证据？","answer":"默认返回 5 条证据。"}
+{"id":"a-08","query":"重排候选上限是多少？","answer":"重排候选上限是 40。"}
+{"id":"a-09","query":"项目是否支持离线生成？","answer":"项目支持 offline 生成后端。"}
+{"id":"a-10","query":"API 的问答接口是什么？","answer":"问答接口是 POST /api/chat。"}
+{"id":"a-11","query":"旧版兼容接口是什么？","answer":"旧版兼容接口是 POST /ask。"}
+{"id":"a-12","query":"项目支持哪些文档格式？","answer":"项目支持 md、txt、pdf 和 html。"}
+{"id":"a-13","query":"API 是否支持 API key？","answer":"API 支持通过 X-API-Key 进行认证。"}
+{"id":"a-14","query":"请求限流配置是什么？","answer":"请求限流由 rate_limit_per_minute 配置。"}
+{"id":"a-15","query":"是否保存索引身份清单？","answer":"项目保存 data/index_manifest.json。"}
+{"id":"a-16","query":"BM25 使用什么分词版本？","answer":"BM25 使用 cjk-char-bigram-v1。"}
+{"id":"a-17","query":"重排模型是否强制加载？","answer":"重排模型采用懒加载。"}
+{"id":"a-18","query":"是否支持 heading-aware 分块？","answer":"项目支持 heading_chars 分块策略。"}
+{"id":"a-19","query":"Trace 默认保留多久？","answer":"Trace 默认保留 1 小时。"}
+{"id":"a-20","query":"Trace 默认容量是多少？","answer":"Trace 默认最多保留 100 条。"}
+{"id":"a-21","query":"默认生成模型是什么？","answer":"默认生成模型是 gemma3:4b。"}
+{"id":"a-22","query":"Qdrant 默认端口是什么？","answer":"Qdrant HTTP 默认端口是 6333。"}

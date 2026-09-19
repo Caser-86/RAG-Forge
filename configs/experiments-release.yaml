@@ -1,0 +1,49 @@
+{
+  "profile": "release",
+  "corpus": {
+    "path": "data/processed/web",
+    "name": "local-processed-web"
+  },
+  "index": {
+    "backend": "qdrant_local",
+    "qdrant_path": "data/benchmark-qdrant-release",
+    "qdrant_collection": "rag_forge_release",
+    "index_manifest_path": "data/benchmark-release-index-manifest.json",
+    "embedder_backend": "ollama",
+    "embedder_model": "bge-m3",
+    "embedder_dim": 1024,
+    "embedder_digest": "",
+    "chunk_strategy": "heading_chars",
+    "chunk_size": 2200,
+    "chunk_overlap": 200
+  },
+  "chunking": {
+    "variants": [
+      {"chunk_size": 800, "chunk_overlap": 100},
+      {"chunk_size": 2200, "chunk_overlap": 200}
+    ]
+  },
+  "retrieval": {
+    "modes": ["dense", "hybrid", "hybrid_rerank"],
+    "ks": [5, 10],
+    "dense_top_k": 20,
+    "sparse_top_k": 20,
+    "rerank_candidate_k": 40,
+    "rerank_top_k": 5,
+    "rerank_model": "BAAI/bge-reranker-base",
+    "use_rerank": true
+  },
+  "generation": {
+    "backend": "ollama",
+    "models": ["gemma3:4b", "gemma4:e4b"],
+    "retrieval_mode": "hybrid_rerank",
+    "top_k": 5,
+    "temperature": 0.2,
+    "num_predict": 512,
+    "seed": 42,
+    "timeout_seconds": 180
+  },
+  "hardware": {
+    "notes": "Fill embedder_digest with the provider-reported model revision before a release run. Do not publish a blank-digest result."
+  }
+}

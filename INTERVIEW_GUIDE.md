@@ -1,6 +1,6 @@
 # RAG-Forge 面试要点 + 演示脚本
 
-> 用途：GitHub 项目区面试用。所有数字均为本地真实跑出（bge-m3 / bge-reranker / 火山方舟 glm-5.3-flash），不虚构。
+> 用途：GitHub 项目区面试用的辅助材料。文中的历史数字和踩坑记录来自特定本机快照，不代表当前 Golden Set 或正式发布指标；当前默认生成路径是本机 Ollama，OpenAI-compatible 后端只是兼容选项。
 > 一句话定位：**可评测的检索增强问答引擎 —— 语义分块 + 稠密/BM25 混合检索 + RRF 融合 + CrossEncoder 重排 + 证据驱动生成（不足即拒答）+ 量化评测。**
 
 ---
@@ -18,19 +18,19 @@
         ├ BM25 稀疏检索（rank_bm25）───────► RRF 融合
         └ 按需扩展
    │     ▼
-   ▼  bge-reranker（CrossEncoder）精排，输出相关性分 0~1
+   ▼  bge-reranker（CrossEncoder）精排，输出需区分 raw / normalized 的相关性分
    │
    ▼
-生成层  证据驱动 prompt → 火山方舟 glm-5.3-flash；rerank<0.15 拒答
+ 生成层  证据驱动 prompt → Ollama Gemma（API 后端可选）；已校准分数才参与拒答阈值
    │
    ▼
 答案（含 [n] 引用，traced）
 ```
 
-- **语言/框架**：Python 3.11 + FastAPI + Uvicorn
+- **语言/框架**：Python >=3.10；当前验证路径为 Windows/Python 3.14 与 Docker/Python 3.11；FastAPI + Uvicorn
 - **向量库**：Qdrant（Docker）/ InMemory（本地离线测试）
 - **嵌入/重排**：`BAAI/bge-m3` + `BAAI/bge-reranker-base`（智源开源，全部本地离线）
-- **生成**：火山方舟 `glm-5.3-flash`（OpenAI 兼容）
+- **生成**：本机 Ollama `gemma3:4b`/`gemma4:e4b`；OpenAI-compatible 生成后端保留为兼容路径
 - **评测**：Hit@K / Recall@K / MRR；忠实度用确定性 token 覆盖代理
 - **工程化**：结构化日志 + trace_id、Docker Compose（Qdrant + API）、pytest 离线测试
 
@@ -42,12 +42,12 @@
 - **为什么分层**：稠密向量擅长语义近义但不精确匹配，BM25 擅长精确/专有名词但忽略语义。单一召回会 miss。
 - **RRF 融合**：不依赖调节权重，用 `∑ 1/(60+rank)` 把两路排序合并，鲁棒、无超参调优。
 - **精排**：CrossEncoder 对「问题+候选段落」成对打分，比 BiEncoder 召回更准，把最相关顶到第一位。
-- **实测证据**（本机一次检索）：
+- **历史实测证据**（特定本机一次检索，不是当前发布指标）：
   - 候选 `RAG技术=0.998`、`智能代理=0.009`、`苹果水果=0.000` → 语义相关性被拉开一个量级。
 
 ### 2. 证据驱动生成 + 拒答（反幻觉）
 - 生成 prompt 强制**严格基于检索证据**作答，并要求标注 `[n]` 引用。
-- 用重排器输出的相关性分做**拒答门槛**：`rerank_score < 0.15` 即返回「信息不足」，**宁可不说，不编**。
+- 只有显式声明为 normalized/probability 的重排分数才参与**拒答门槛**；当前 raw 分数显示为未校准，不能直接与 `0.15` 比较或当作概率。
 - **探测切入点**：把相关性 score 从「二值命中」升级成「连续分数再设阈值」——这一步是把「看起来有 RAG」做成「真的有反幻觉约束」的分水岭。
 
 ### 3. 可观测性
@@ -107,36 +107,36 @@
 2. **Qdrant point ID 只收整数/UUID**：用 `路径::c0` 字符串当 ID 被拒。修复：`uuid5(固定namespace, chunk_id)` 派生稳定 ID，并存入 payload 以便检索还原。
 3. **Docker build 连不上官方源**（PyTorch R2 / Docker Hub 均不稳定）：改用国内镜像（上海交大 pytorch-wheels、清华 PyPI、qdrant 重试）；模型**挂载宿主机而非打进镜像**，避免每镜像塞 3.4GB、避免反复下载。
 4. **评测假阴性**：MLQA 同一文章含多个问题时相同段落被重复索引成不同 id，导致"内容命中却判不中"。修复：按唯一 context 建语料再对 gold。
-5. **零除 / 配置前缀**：空语料 BM25 除零（判空跳过）；`.env` 前缀 `RAG__`→`RAG_`，直接 `RAG_` 才能被读取。
+5. **零除 / 配置前缀**：空语料 BM25 判空跳过；`.env` 使用 `RAG_` 前缀，配置会在启动时校验不支持的后端与非法分块参数。
 
 ---
 
-## 六、现场演示脚本（curl 直连 Docker API :8001）
+## 六、现场演示脚本（Docker API :8001）
 
 前置：`docker compose up -d`（Qdrant+API 已运行），文档已 ingest 为 1 chunk。
 
 ### 演示 1 —— 命中问答（检索→重排→生成→引用）
 ```powershell
-$b='{"query":"BGE-M3 是做什么用的?它的向量维度是多少?"}'
-curl -X POST http://localhost:8001/ask -H "Content-Type: application/json" -d $b
+$body = @{ query = "BGE-M3 是做什么用的？它的向量维度是多少？" } | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri http://localhost:8001/api/chat -ContentType 'application/json' -Body $body
 ```
-预期：`answer` 含智能体能力描述 + `[1]` 引用，`refused:false`，`evidences[0].rerank_score≈0.98`。
+预期：返回 `answer`、`citations`/`citation_details` 和 `refused` 字段；是否回答取决于当前索引、模型和证据，不预设具体分数。
 
 **讲解点**：答案内容全部来自证据、带引用、不编造。
 
 ### 演示 2 —— 拒答（证据不足则不硬编）
 ```powershell
-$b='{"query":"如何做一道红烧肉?"}'
-curl -X POST http://localhost:8001/ask -H "Content-Type: application/json" -d $b
+$body = @{ query = "如何做一道红烧肉？" } | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri http://localhost:8001/api/chat -ContentType 'application/json' -Body $body
 ```
-预期：`refused:true`，`rerank_score=0.0`，返回「信息不足」。
+预期：若当前语料没有可靠证据，应返回 `refused:true` 和 `refusal_reason`；拒答结果由证据、配置和模型响应共同决定。
 
-**讲解点**：重排分数驱动拒答阈值——这是反幻觉的关键设计，deep-dive 讲这个。
+**讲解点**：证据选择、引用校验和拒答规则共同约束幻觉；未校准的重排 raw 分数不作为概率。
 
 ### 演示 3 —— 检索视图（看多路融合 + 精排分）
 ```powershell
-$b='{"query":"BGE-M3 支持哪几种编码方式?"}'
-curl -X POST http://localhost:8001/query -H "Content-Type: application/json" -d $b
+$body = @{ query = "BGE-M3 支持哪几种编码方式？" } | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri http://localhost:8001/query -ContentType 'application/json' -Body $body
 ```
 预期：命中 1 段，同时看到 `rerank_score`(精排) 与 `fused_score`(RRF 融合)。
 
@@ -151,4 +151,4 @@ docker compose logs api --tail 20        # 看 trace_id 与 query/hits/best_scor
 
 ## 七、三句话自述（开场白模板）
 
-> 我做了 RAG-Forge，一个**可评测**的检索增强问答引擎。核心是分层检索：**bge-m3 稠密 + BM25 稀疏双路召回，RRF 融合，再用 bge-reranker 精排**；生成阶段用重排分数做**证据不足即拒答**的反幻觉约束，并用 RAGAS 思路的指标把检索和生成质量量化出来。整条链路本地可离线复现，也做了 Docker 落地、结构化日志和 trace。它配合我在 Agent/RAG 方向的工程经验，解决了"RAG 能跑但说不清质量、挡不住幻觉"这类实际问题。
+> 我做了 RAG-Forge，一个**可评测**的检索增强问答引擎。核心是分层检索：**bge-m3 稠密 + BM25 稀疏双路召回，RRF 融合，再按需用 bge-reranker 精排**；生成阶段只把实际发送的证据交给模型，并用引用校验和工程拒答约束边界。整条链路可以用 deterministic/offline 配置做离线回归，也支持本机 Ollama、Docker、结构化日志和 trace。它解决的是“RAG 能跑但说不清质量、证据链不透明”的工程问题。

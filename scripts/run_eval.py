@@ -1,4 +1,4 @@
-"""评测脚本：对 MLQA 子集跑检索/生成指标，并做检索策略消融。
+"""兼容旧 MLQA 子集的评测脚本；新 Golden/candidate 实验使用 run_benchmark。
 
 用法：
     python -m scripts.run_eval data/raw/mlqa_en_zh.jsonl 10   # 10 为 k（召回/命中 top-k）
@@ -12,13 +12,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from ragforge.config import Settings, get_settings            # noqa: E402
-from ragforge.evaluation import (                    # noqa: E402
-    GenerationReport, RetrievalReport, citation_support,
-    faithfulness_proxy, hit_at_k, mrr, recall_at_k,
+from ragforge.config import Settings, get_settings
+from ragforge.evaluation import (
+    GenerationReport,
+    RetrievalReport,
+    citation_support,
+    faithfulness_proxy,
+    hit_at_k,
+    mrr,
+    recall_at_k,
 )
-from ragforge.observability import setup_logging     # noqa: E402
-from ragforge.pipeline import RAGForge               # noqa: E402
+from ragforge.observability import setup_logging
+from ragforge.pipeline import RAGForge
 
 setup_logging()
 
@@ -49,34 +54,41 @@ def main(eval_file: str, k: int = 10) -> None:
 
     base = get_settings()
 
-    # ---- 消融：纯稠密 vs 稠密+BM25(RRF)；沿用 env 的嵌入(bge)/重排设置 ----
-    for mode in ("dense_only", "hybrid"):
+    # ---- 消融：纯稠密 vs 稠密+BM25(RRF)；沿用 env 的嵌入(bge)设置 ----
+    for mode in ("dense", "hybrid"):
         s = base.model_copy(deep=True)
+        s.retrieval_mode = mode
         s.sparse_top_k = 15 if mode == "hybrid" else 0
         engine = build_engine(s, corpus)
-        rep = RetrievalReport()
-        for i, r in enumerate(rows):
-            evs = engine.retrieve_only(r["query"])
-            rep.hit_at_k.append(hit_at_k(evs, gold_for_q[i], k))
-            rep.recall_at_k.append(recall_at_k(evs, gold_for_q[i], k))
-            rep.mrr_list.append(mrr(evs, gold_for_q[i]))
-        print(f"\n=== 检索策略: {mode} ===")
-        print(rep.summarize(k=k))
+        try:
+            rep = RetrievalReport()
+            for i, r in enumerate(rows):
+                evs = engine.retrieve_only(r["query"], retrieval_mode=mode, top_k=k)
+                rep.hit_at_k.append(hit_at_k(evs, gold_for_q[i], k, by="document"))
+                rep.recall_at_k.append(recall_at_k(evs, gold_for_q[i], k, by="document"))
+                rep.mrr_list.append(mrr(evs, gold_for_q[i], by="document"))
+            print(f"\n=== 检索策略: {mode} ===")
+            print(rep.summarize(k=k))
+        finally:
+            engine.close()
 
     # ---- 生成层指标（忠实度代理，用 env 的方舟 LLM）----
     engine = build_engine(base, corpus)
-    greport = GenerationReport()
-    for i, r in enumerate(rows):
-        ans = engine.ask(r["query"])
-        if ans.refused:
-            greport.refused += 1
-        else:
-            ev_texts = [e.chunk.text for e in ans.evidences]
-            greport.faithfulness.append(faithfulness_proxy(ans.answer, ev_texts))
-            greport.citation_support.append(citation_support(ans.answer, ev_texts))
-        greport.total += 1
-    print("\n=== 生成层 ===")
-    print(greport.summarize())
+    try:
+        greport = GenerationReport()
+        for _i, r in enumerate(rows):
+            ans = engine.ask(r["query"])
+            if ans.refused:
+                greport.refused += 1
+            else:
+                ev_texts = [e.chunk.text for e in ans.evidences]
+                greport.faithfulness.append(faithfulness_proxy(ans.answer, ev_texts))
+                greport.citation_support.append(citation_support(ans.answer, ev_texts))
+            greport.total += 1
+        print("\n=== 生成层 ===")
+        print(greport.summarize())
+    finally:
+        engine.close()
 
 
 if __name__ == "__main__":

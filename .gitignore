@@ -12,11 +12,27 @@ venv/
 build/
 dist/
 .pytest_cache/
+.ruff_cache/
+.playwright-cli/
+.superpowers/
+output/
+browser-e2e.png
 
 # 数据 / 模型缓存
 data/raw/
+data/processed/
+data/reports/
 data/artifacts/
 data/cache/
+data/run/
+data/qdrant/
+data/index_manifest.json
+data/index_manifest_*.json
+data/knowledge_manifest.sqlite3*
+data/knowledge_manifest_*.sqlite3*
+data/**/*.db
+data/**/*.db-wal
+data/**/*.db-shm
 ~/.cache/huggingface/
 *.bin
 *.pt
@@ -29,3 +45,5 @@ data/cache/
 
 # 构建日志
 *.log
+.coverage
+.coverage.*

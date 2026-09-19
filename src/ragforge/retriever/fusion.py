@@ -1,8 +1,6 @@
 """多路召回融合：Reciprocal Rank Fusion（RRF）取稠密/稀疏之长。"""
 from __future__ import annotations
 
-import math
-
 from ..models import Chunk
 
 
@@ -22,5 +20,4 @@ def rrf_fuse(
                 scores[cid] = (chunk, scores[cid][1] + 1.0 / (k + rank))
             else:
                 scores[cid] = (chunk, 1.0 / (k + rank))
-    ranked = sorted(scores.values(), key=lambda x: x[1], reverse=True)
-    return ranked
+    return sorted(scores.values(), key=lambda x: x[1], reverse=True)

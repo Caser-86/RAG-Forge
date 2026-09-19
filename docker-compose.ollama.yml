@@ -1,0 +1,13 @@
+# Windows Docker Desktop override for a host-installed Ollama.
+# Do not use 127.0.0.1 here: inside the API container it points to the container itself.
+services:
+  api:
+    environment:
+      RAG_GENERATION_BACKEND: ollama
+      RAG_EMBEDDER_BACKEND: ollama
+      RAG_EMBEDDER_MODEL: bge-m3
+      RAG_OLLAMA_BASE_URL: ${RAG_OLLAMA_DOCKER_BASE_URL:-http://host.docker.internal:11434}
+      RAG_DEFAULT_GENERATION_MODEL: ${RAG_DEFAULT_GENERATION_MODEL:-gemma3:4b}
+      RAG_INDEX_MANIFEST_PATH: /app/data/index_manifest.json
+      RAG_KNOWLEDGE_MANIFEST_PATH: /app/data/knowledge_manifest.sqlite3
+      RAG_USE_RERANK: "false"

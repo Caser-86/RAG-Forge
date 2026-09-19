@@ -1,0 +1,25 @@
+{"category":"semantic","query":"Why combine dense and sparse retrieval?","gold":"hybrid"}
+{"category":"semantic","query":"How does vector similarity help find related text?","gold":"dense"}
+{"category":"semantic","query":"What does RRF combine?","gold":"hybrid"}
+{"category":"semantic","query":"Why use a reranker after initial retrieval?","gold":"rerank"}
+{"category":"semantic","query":"How does heading context improve chunks?","gold":"chunking"}
+{"category":"keyword","query":"What is BM25?","gold":"bm25"}
+{"category":"keyword","query":"Find ERR_CONNECTION_RESET handling","gold":"error-code"}
+{"category":"keyword","query":"What does HTTP_404 mean?","gold":"error-code"}
+{"category":"keyword","query":"Where is tokenizer_version stored?","gold":"manifest"}
+{"category":"keyword","query":"What is chunk_overlap?","gold":"chunking"}
+{"category":"error-code","query":"How should HTTP_429 be retried?","gold":"retry"}
+{"category":"error-code","query":"What happens on ERR_CONNECTION_RESET?","gold":"network"}
+{"category":"error-code","query":"How is HTTP_500 handled?","gold":"server-error"}
+{"category":"error-code","query":"What does a zero vector cause?","gold":"embedding-error"}
+{"category":"error-code","query":"When is a 503 returned?","gold":"unavailable"}
+{"category":"cross-language","query":"稠密检索和 BM25 为什么结合？","gold":"hybrid"}
+{"category":"cross-language","query":"如何保留中文标题层级？","gold":"chunking"}
+{"category":"cross-language","query":"什么是向量数据库？","gold":"vector-database"}
+{"category":"cross-language","query":"如何处理登录页面？","gold":"cleaner"}
+{"category":"cross-language","query":"如何避免重复嵌入？","gold":"incremental"}
+{"category":"irrelevant","query":"What is the weather today?","gold":"none"}
+{"category":"irrelevant","query":"Who won yesterday's game?","gold":"none"}
+{"category":"irrelevant","query":"How do I bake a cake?","gold":"none"}
+{"category":"irrelevant","query":"What is the capital of France?","gold":"none"}
+{"category":"irrelevant","query":"Tell me a joke.","gold":"none"}

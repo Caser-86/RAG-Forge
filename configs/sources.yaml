@@ -1,0 +1,48 @@
+# 第一批只采集官方技术文档；扩大范围前先验证增量和引用链路。
+- id: ollama_docs
+  type: sitemap
+  base_url: https://docs.ollama.com/
+  sitemap_url: https://docs.ollama.com/sitemap.xml
+  allowed_domains:
+    - docs.ollama.com
+  category: local_llm
+  trust: 1.0
+  enabled: true
+  max_pages: 200
+  license_hint: official documentation
+
+- id: qdrant_docs
+  type: sitemap
+  base_url: https://qdrant.tech/
+  sitemap_url: https://qdrant.tech/sitemap.xml
+  allowed_domains:
+    - qdrant.tech
+  category: vector_database
+  trust: 1.0
+  enabled: true
+  max_pages: 200
+  license_hint: official documentation
+
+- id: fastapi_docs
+  type: sitemap
+  base_url: https://fastapi.tiangolo.com/
+  sitemap_url: https://fastapi.tiangolo.com/sitemap.xml
+  allowed_domains:
+    - fastapi.tiangolo.com
+  category: web_framework
+  trust: 1.0
+  enabled: true
+  max_pages: 200
+  license_hint: official documentation
+
+- id: langchain_docs
+  type: sitemap
+  base_url: https://docs.langchain.com/
+  sitemap_url: https://docs.langchain.com/sitemap.xml
+  allowed_domains:
+    - docs.langchain.com
+  category: rag_framework
+  trust: 0.95
+  enabled: true
+  max_pages: 200
+  license_hint: official documentation

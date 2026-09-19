@@ -1,0 +1,20 @@
+{"id":"rw-01","query":"结合上一轮说明 E9001 的修复","expected_doc_ids":["doc-e9001"]}
+{"id":"rw-02","query":"那 v2 的默认分块是多少？","expected_doc_ids":["doc-v2"]}
+{"id":"rw-03","query":"继续查 BGE-M3 的配置","expected_doc_ids":["doc-bge"]}
+{"id":"rw-04","query":"这个错误码怎么处理？","expected_doc_ids":["doc-error"]}
+{"id":"rw-05","query":"上一条里的 API 限制呢？","expected_doc_ids":["doc-api"]}
+{"id":"rw-06","query":"对比 gemma3:4b 和 gemma4:e4b","expected_doc_ids":["doc-model"]}
+{"id":"rw-07","query":"刚才提到的 2200 字符限制","expected_doc_ids":["doc-chunk"]}
+{"id":"rw-08","query":"再看 HTTP_429 的含义","expected_doc_ids":["doc-http"]}
+{"id":"rw-09","query":"沿用 RAG-Forge 的默认设置","expected_doc_ids":["doc-rag"]}
+{"id":"rw-10","query":"那英文文档里的 dense retrieval 呢？","expected_doc_ids":["doc-dense"]}
+{"id":"rw-11","query":"继续解释 v1 和 v2 的差别","expected_doc_ids":["doc-version"]}
+{"id":"rw-12","query":"把 E1001 的上下文补充完整","expected_doc_ids":["doc-e1001"]}
+{"id":"rw-13","query":"同一个产品的部署方式是什么？","expected_doc_ids":["doc-deploy"]}
+{"id":"rw-14","query":"上一问的 1024 维向量来源","expected_doc_ids":["doc-vector"]}
+{"id":"rw-15","query":"再确认 API key 的传递方式","expected_doc_ids":["doc-key"]}
+{"id":"rw-16","query":"这个模型支持跨语言吗？","expected_doc_ids":["doc-cross"]}
+{"id":"rw-17","query":"继续查错误码 E5000","expected_doc_ids":["doc-e5000"]}
+{"id":"rw-18","query":"只看最多 5 条证据的设置","expected_doc_ids":["doc-topk"]}
+{"id":"rw-19","query":"上一轮的 rerank 模型是什么？","expected_doc_ids":["doc-rerank"]}
+{"id":"rw-20","query":"比较 6333 和 6334 端口","expected_doc_ids":["doc-port"]}
