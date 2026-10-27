@@ -17,7 +17,7 @@ M8 的可选 Query Rewrite 已实现并完成真实本地模型评估。默认�
 
 ## 真实 20 条样例
 
-评估文件：[m8-rewrite-eval.json](../../data/reports/m8-rewrite-eval.json)。评估使用本机 Ollama 的 `qwen3:0.6b`，比较同一批固定 query 的 OFF/ON 改写路径；样例保留 `expected_doc_ids`，但本次脚本是 rewrite-only 对比，没有把它冒充成独立的向量检索 Recall 实验。
+评估文件：`data/reports/m8-rewrite-eval.json`（本地历史产物，不随仓库分发）。评估使用本机 Ollama 的 `qwen3:0.6b`，比较同一批固定 query 的 OFF/ON 改写路径；样例保留 `expected_doc_ids`，但本次脚本是 rewrite-only 对比，没有把它冒充成独立的向量检索 Recall 实验。
 
 | 指标 | 结果 |
 |---|---:|

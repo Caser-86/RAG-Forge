@@ -1,4 +1,6 @@
-# Golden 首批 20 题审核包
+# Golden 首批 20 题审核包（历史辅助材料）
+
+> 2026-10-27 文档整理：以下为原候选预审记录，不是本次活动快照或人工通过结论。本地来源仅展示路径，不随 GitHub 分发；摘录中的 Markdown 原样作为代码展示，避免原站点锚点误指本页。原问题、预期答案及人工决策字段保持原样。
 
 日期：2026-09-16。状态：**AI 预审，尚无人审核；未写入 Golden 或审核进度。**
 
@@ -6,7 +8,7 @@
 
 操作：回复“001 修改：……；002 拒绝；……”并提供真实审核人标识。不要整体接受本批。修改后的题目会再次展示确认，不会自动视为通过。
 
-证据来自当前本地语料快照，不代表外部文档最新状态。摘录仅用于定位；链接和 Markdown 标记会造成逐字匹配失败，不能据此断言无证据。应点开完整来源复核。
+证据来自该历史审核包生成时的本地语料快照，不代表外部文档最新状态。摘录仅用于定位；链接和 Markdown 标记会造成逐字匹配失败，不能据此断言无证据。应点开完整来源复核。
 
 ## 001 · cand-basic-001
 
@@ -15,10 +17,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/0165ea5581ca25021aaec7297c2cc0bbcc6f232415f4dfd62afc25da270dfe49.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/0165ea5581ca25021aaec7297c2cc0bbcc6f232415f4dfd62afc25da270dfe49.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Body - Updates[¶](#body-updates)
 > 
 > ## Update replacing with `PUT`[¶](#update-replacing-with-put)
@@ -40,6 +43,7 @@
 > tags: list[str] = []
 > items = {
 > "foo": {
+````
 
 ## 002 · cand-basic-002
 
@@ -48,10 +52,11 @@
 - AI 预审：答案是宣传性评价，建议改成如何使用 TestClient 并补充操作步骤。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/046c3b78e43555331414b5214344987bc3e42e53b0f1f48ffb408b699d895e77.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/046c3b78e43555331414b5214344987bc3e42e53b0f1f48ffb408b699d895e77.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Testing[¶](#testing)
 > 
 > Thanks to [Starlette](https://starlette.dev/testclient/), testing **FastAPI** applications is easy and enjoyable.
@@ -71,6 +76,7 @@
 > Use the `TestClient` object the same way as you do with `httpx`.
 > 
 > Write simple `assert` 
+````
 
 ## 003 · cand-basic-003
 
@@ -79,10 +85,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/059295d9af32905b98bebe159fd841744da5f716a32088512b0d2becf002ba56.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/059295d9af32905b98bebe159fd841744da5f716a32088512b0d2becf002ba56.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 >  inputs are not permitted",
 > "input": "Mr. Poopybutthole"
 > }
@@ -92,6 +99,7 @@
 > ## Summary[¶](#summary)
 > 
 > You can use Pydantic models to declare form fields in FastAPI. 😎
+````
 
 ## 004 · cand-basic-004
 
@@ -100,10 +108,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/0b6e930cbeded1fbc252c989cf392156267d06094c284cf9bd5f9fb63fef2dea.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/0b6e930cbeded1fbc252c989cf392156267d06094c284cf9bd5f9fb63fef2dea.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Deploy FastAPI on Cloud Providers[¶](#deploy-fastapi-on-cloud-providers)
 > 
 > You can use virtually **any cloud provider** to deploy your FastAPI application.
@@ -119,6 +128,7 @@
 > It brings the same **developer experience** of building apps with FastAPI to **deploying** them to the cloud. 🎉
 > 
 > FastAPI Cloud is the primary sponsor and funding provider for the *FastAPI and
+````
 
 ## 005 · cand-basic-005
 
@@ -127,10 +137,11 @@
 - AI 预审：答案以冒号结束，是安装引导而非完整答案；需补齐具体操作。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/0be2b9eb00086821e866264b11a7aef2add21a51f7a31a57695cc91facea85d5.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/0be2b9eb00086821e866264b11a7aef2add21a51f7a31a57695cc91facea85d5.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # WebSockets[¶](#websockets)
 > 
 > You can use [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) with **FastAPI**.
@@ -152,6 +163,7 @@
 > And to communicate using WebSockets with your backend you would probably use your frontend's utilities.
 > 
 > Or you might have a native mobile applica
+````
 
 ## 006 · cand-basic-006
 
@@ -160,10 +172,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/111ea56d80c75510a9e43cb22fc497e7b0acc47050d0421708f01fcd4b7cc71d.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/111ea56d80c75510a9e43cb22fc497e7b0acc47050d0421708f01fcd4b7cc71d.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # CORS (Cross-Origin Resource Sharing)[¶](#cors-cross-origin-resource-sharing)
 > 
 > [CORS or "Cross-Origin Resource Sharing"](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) refers to the situations when a frontend running in a browser has JavaScript code that communicates with a backend, and the backend is in a different "origin" than the frontend.
@@ -179,6 +192,7 @@
 > - `http://localhost:8080`
 > 
 > Even if they are all in `localhost`, they us
+````
 
 ## 007 · cand-basic-007
 
@@ -187,10 +201,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/1470b4b765dbd909cda1424bdff408c8580b302ff8b0633b6dc874f9e573285f.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/1470b4b765dbd909cda1424bdff408c8580b302ff8b0633b6dc874f9e573285f.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Templates[¶](#templates)
 > 
 > You can use any template engine you want with **FastAPI**.
@@ -213,6 +228,7 @@
 > - Create a `templates` object that you can reuse later.
 > - Declare a `Request` parameter in the*path operation* that will return a template.
 > - Use the `templates` you created to render and retu
+````
 
 ## 008 · cand-basic-008
 
@@ -221,10 +237,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/19c45d265abf20db23194eb83d94f7815b564eb3f0ae1a2cd0526643af1b8ddb.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/19c45d265abf20db23194eb83d94f7815b564eb3f0ae1a2cd0526643af1b8ddb.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Behind a Proxy[¶](#behind-a-proxy)
 > 
 > In many situations, you would use a **proxy** like Traefik or Nginx in front of your FastAPI app.
@@ -236,6 +253,7 @@
 > A **proxy** in front of your application would normally set some headers on the fly before sending the requests to your **server** to let the server know that the request was **forwarded** by the proxy, letting it know the original (public) URL, including the domain, that it is using HTTPS, etc.
 > 
 > The **server** program (for example **Uvicorn** via **FastAPI CLI**) is capable of interpreting these headers, and then passing that 
+````
 
 ## 009 · cand-basic-009
 
@@ -244,10 +262,11 @@
 - AI 预审：扩展功能与版本相关；问题需明确文档快照，避免当作永久事实。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/1ec773453618fa968ed3a1a79afaab95d866a679c1c828e7c9b2f5e9adef3c7d.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/1ec773453618fa968ed3a1a79afaab95d866a679c1c828e7c9b2f5e9adef3c7d.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Editor Support[¶](#editor-support)
 > 
 > The official [FastAPI Extension](https://marketplace.visualstudio.com/items?itemName=FastAPILabs.fastapi-vscode) enhances your FastAPI development workflow with *path operation* discovery, navigation, as well as FastAPI Cloud deployment, and live log streaming.
@@ -257,6 +276,7 @@
 > ## Setup and Installation[¶](#setup-and-installation)
 > 
 > The **FastAPI Extension** is available for both [VS Code](https://code.visualstudio.com/) and [Cursor](https://www.cursor.com/). It can be installed directly from the Extensions panel in each editor by sear
+````
 
 ## 010 · cand-basic-010
 
@@ -265,10 +285,11 @@
 - AI 预审：答案是大会宣传，不适合作为 FastAPI 核心技术题；建议替换。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/2145a293aafaea81a5a60adcb28c6e2f81ecf68d2da0f5fe6acb6b59c828ecb8.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/2145a293aafaea81a5a60adcb28c6e2f81ecf68d2da0f5fe6acb6b59c828ecb8.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > [FastAPI Conf '26 October 28, 2026 Amsterdam, NL All about FastAPI, right from the source. Learn more](https://fastapiconf.com)
 > 
 > # FastAPI[¶](#fastapi)
@@ -284,6 +305,7 @@
 > The key features are:
 > 
 > - **Fast** : Very high performance, on par with**NodeJS** and**Go** (thanks to Starlette and Pydantic).[One of the faste
+````
 
 ## 011 · cand-basic-011
 
@@ -292,10 +314,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/251925bd15b1035568cf009f275a0455c14957a0fae244cd20d36f56fa2c2c0f.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/251925bd15b1035568cf009f275a0455c14957a0fae244cd20d36f56fa2c2c0f.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Body - Nested Models[¶](#body-nested-models)
 > 
 > With **FastAPI**, you can define, validate, document, and use arbitrarily deeply nested models (thanks to Pydantic).
@@ -320,6 +343,7 @@
 > return results
 > ```
 > This will make `tags` be a list, although it doesn't declare th
+````
 
 ## 012 · cand-basic-012
 
@@ -328,10 +352,11 @@
 - AI 预审：答案只有“部署较容易”，缺少可验证知识点；建议替换。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/253b111e6bfcaff74129620b3e2030db67fccbf243b40575da35bffa079c5472.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/253b111e6bfcaff74129620b3e2030db67fccbf243b40575da35bffa079c5472.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Deployment[¶](#deployment)
 > 
 > Deploying a **FastAPI** application is relatively easy.
@@ -345,6 +370,7 @@
 > This is in contrast to the **development** stages, where you are constantly changing the code, breaking it and fixing it, stopping and restarting the development server, etc.
 > 
 > ##
+````
 
 ## 013 · cand-basic-013
 
@@ -353,10 +379,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/26a0b3efffe80a9aefaa5cc7b110757ce416de1b991bdde00bf1f68dec405249.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/26a0b3efffe80a9aefaa5cc7b110757ce416de1b991bdde00bf1f68dec405249.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Request Files[¶](#request-files)
 > 
 > You can define files to be uploaded by the client using `File`.
@@ -385,6 +412,7 @@
 > return {"file_size": len(file)}
 > @app.post("/uploadfile/")
 > async def create_upload_file(f
+````
 
 ## 014 · cand-basic-014
 
@@ -393,10 +421,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/2a110100b77fb13ebb988a5ea9fac936bd69811f921eb5a285961d38274b7e14.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/2a110100b77fb13ebb988a5ea9fac936bd69811f921eb5a285961d38274b7e14.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Strict Content-Type Checking[¶](#strict-content-type-checking)
 > 
 > By default, **FastAPI** uses strict `Content-Type` header checking for JSON request bodies, this means that JSON requests **must** include a valid `Content-Type` header (e.g. `application/json`) in order for the body to be parsed as JSON.
@@ -409,6 +438,7 @@
 > 
 > - don't have a `Content-Type` header (e.g. using`fetch()` with a`Blob` body)
 > - and don't s
+````
 
 ## 015 · cand-basic-015
 
@@ -417,10 +447,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/2ac0491c0a3279db9c4d733d116a23e1cfeea546f84011232fce81706035823b.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/2ac0491c0a3279db9c4d733d116a23e1cfeea546f84011232fce81706035823b.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Sub Applications - Mounts[¶](#sub-applications-mounts)
 > 
 > If you need to have two independent FastAPI applications, with their own independent OpenAPI and their own docs UIs, you can have a main app and "mount" one (or more) sub-application(s).
@@ -435,6 +466,7 @@
 > 
 > ```
 > from fastapi i
+````
 
 ## 016 · cand-basic-016
 
@@ -443,10 +475,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/2c0cc1fdf35af40f56ae922fd2f50f82ff77a7ee2bc5e22267a2bdf4a95c4397.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/2c0cc1fdf35af40f56ae922fd2f50f82ff77a7ee2bc5e22267a2bdf4a95c4397.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Header Parameter Models[¶](#header-parameter-models)
 > 
 > If you have a group of related **header parameters**, you can create a **Pydantic model** to declare them.
@@ -466,6 +499,7 @@
 > from fastapi import FastAPI, Header
 > from pydantic import BaseModel
 > a
+````
 
 ## 017 · cand-basic-017
 
@@ -474,10 +508,11 @@
 - AI 预审：答案只说有若干参数，没有回答具体配置；需重写。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/3226cd853f7ef75f8767ead03717ac4315253df020f6707de764187014ae4a8d.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/3226cd853f7ef75f8767ead03717ac4315253df020f6707de764187014ae4a8d.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Path Operation Configuration[¶](#path-operation-configuration)
 > 
 > There are several parameters that you can pass to your *path operation decorator* to configure it.
@@ -498,6 +533,7 @@
 > from fastapi import FastAPI, status
 > from pydantic import BaseModel
 > app = Fast
+````
 
 ## 018 · cand-basic-018
 
@@ -506,15 +542,17 @@
 - AI 预审：答案是目录引导，无明确技术知识点；建议替换。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/3cde1bd348e9918da9f5d873be26b948b421795fce6233369aafeeb681eda074.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/3cde1bd348e9918da9f5d873be26b948b421795fce6233369aafeeb681eda074.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Learn[¶](#learn)
 > 
 > Here are the introductory sections and the tutorials to learn **FastAPI**.
 > 
 > You could consider this a **book**, a **course**, the **official** and recommended way to learn FastAPI. 😎
+````
 
 ## 019 · cand-basic-019
 
@@ -523,10 +561,11 @@
 - AI 预审：建议将章节概述改为具体知识问题，去掉文件哈希；答案支持范围需人工确认。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/45349e075c23e483bfc926ad9dcbd6f428973fbe83f1891a4daaf5414497a5dd.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/45349e075c23e483bfc926ad9dcbd6f428973fbe83f1891a4daaf5414497a5dd.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Testing Events: lifespan and startup - shutdown[¶](#testing-events-lifespan-and-startup-shutdown)
 > 
 > When you need `lifespan` to run in your tests, you can use the `TestClient` with a `with` statement:
@@ -549,6 +588,7 @@
 > return items[item_id]
 > def test_read_items():
 > # Before the lifespan starts, "items" is s
+````
 
 ## 020 · cand-basic-020
 
@@ -557,10 +597,11 @@
 - AI 预审：答案是章节过渡语，未解释多参数请求体；需重写。
 - 人工决策：未填写。
 
-[打开完整本地来源](../data/processed/web/fastapi_docs/45b788bf9b2f7f5c21579fbb4405637643851f77e255b23930dc5e7e1434b3dd.md)
+本地来源路径（不随仓库分发）：`data/processed/web/fastapi_docs/45b788bf9b2f7f5c21579fbb4405637643851f77e255b23930dc5e7e1434b3dd.md`
 
 来源摘录（最多 700 字符，可能截断）：
 
+````markdown
 > # Body - Multiple Parameters[¶](#body-multiple-parameters)
 > 
 > Now that we have seen how to use `Path` and `Query`, let's see more advanced uses of request body declarations.
@@ -581,3 +622,4 @@
 > description: str | None = None
 > price: float
 > tax: float |
+````

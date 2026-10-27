@@ -39,7 +39,7 @@
 
 已实际请求四个站点的 robots 与 sitemap：robots 均返回 HTTP 200；sitemap 发现规模为 Ollama 67、Qdrant 786、FastAPI 151、LangChain 1581 个 URL。LangChain 的 `llms.txt` 也可访问，但本阶段仍采用 sitemap 作为统一发现入口。
 
-10 页/源的采集报告为 [fetch-20260911-125831.json](../../data/reports/fetch-20260911-125831.json)：
+10 页/源的采集报告为 `data/reports/fetch-20260911-125831.json`（本地历史产物，不随仓库分发）：
 
 - 40 个页面成功响应；39 个清洗成功；1 个页面按登录页规则跳过；0 个抓取失败。
 - `enumeration_complete=false` 是预期结果，因为本轮使用了页面上限，不能据此执行 INACTIVE 下线。
@@ -63,7 +63,7 @@
 - Qdrant：`readyz=200`，集合状态 `green`，1273 个 points，update queue 为 0。
 - 没有遗留 `update_knowledge` 进程，也没有在 `data` 下发现 `.tmp/.bak/.backup/.old/.orig/.temp/.log` 文件。
 
-机器报告位于 [data/reports/update-9be5379be8f84404a8aeb7444e5c04af.json](../../data/reports/update-9be5379be8f84404a8aeb7444e5c04af.json)。
+机器报告位于 `data/reports/update-9be5379be8f84404a8aeb7444e5c04af.json`（本地历史产物，不随仓库分发）。
 
 ### 3.3 自动化验证
 

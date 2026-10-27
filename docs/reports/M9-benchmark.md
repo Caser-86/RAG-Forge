@@ -17,7 +17,7 @@ M9 的数据集治理和实验框架已落地，并用当前本地处理语料�
 
 ## provisional 检索实验
 
-结果文件：[m9-candidate-retrieval.json](../../data/reports/m9-candidate-retrieval.json)。使用 deterministic embedder 和独立 in-memory store，不能解释为真实 embedding 模型成绩。
+结果文件：`data/reports/m9-candidate-retrieval.json`（本地历史产物，不随仓库分发）。使用 deterministic embedder 和独立 in-memory store，不能解释为真实 embedding 模型成绩。
 
 | 模式 | Hit@5 | Recall@5 | MRR | 状态 |
 |---|---:|---:|---:|---|
@@ -31,13 +31,13 @@ answerable 分母为 90；无答案题单列。请求 top-k=10 时每条返回 1
 
 ## provisional 生成实验
 
-结果文件：[m9-candidate-generation.json](../../data/reports/m9-candidate-generation.json)。证据先按 hybrid 检索一次并按题保存 hash，切换两个请求模型时复用同一证据缓存，没有重复检索。配置后端是 `offline`，所以实际回答模型字段为 `offline`，不是本地 Gemma；这验证了隔离、引用、拒答和失败记录逻辑，但不是生成质量评测。
+结果文件：`data/reports/m9-candidate-generation.json`（本地历史产物，不随仓库分发）。证据先按 hybrid 检索一次并按题保存 hash，切换两个请求模型时复用同一证据缓存，没有重复检索。配置后端是 `offline`，所以实际回答模型字段为 `offline`，不是本地 Gemma；这验证了隔离、引用、拒答和失败记录逻辑，但不是生成质量评测。
 
 两组均为 100/100 成功执行；离线代理的引用合法率均值为 0.25，answerable 题有引用覆盖率为 0.167。拒答混淆矩阵和逐题预测均在 JSON 中保存，未运行或失败项不会从分母删除。
 
 ## 真实 Ollama 生成采样
 
-结果文件：[m9-candidate-generation-ollama-20.json](../../data/reports/m9-candidate-generation-ollama-20.json)。该次运行使用 `configs/experiments-ollama.yaml`、本地 Ollama 的 `gemma3:4b` 与 `gemma4:e4b`，从旧的 116 文档候选快照取前 20 条；两模型均为 20/20 `ok`，实际模型字段与请求模型一致。因为数据集是旧 `candidate` 快照，输出明确标记 `provisional: true`，不能作为当前 corpus 或 Golden 指标；正式审核后必须重新运行。
+结果文件：`data/reports/m9-candidate-generation-ollama-20.json`（本地历史产物，不随仓库分发）。该次运行使用 `configs/experiments-ollama.yaml`、本地 Ollama 的 `gemma3:4b` 与 `gemma4:e4b`，从旧的 116 文档候选快照取前 20 条；两模型均为 20/20 `ok`，实际模型字段与请求模型一致。因为数据集是旧 `candidate` 快照，输出明确标记 `provisional: true`，不能作为当前 corpus 或 Golden 指标；正式审核后必须重新运行。
 
 | 模型 | TP | TN | FP | FN | 引用合法率均值 | answerable 引用覆盖率 | 冷启动 ms | 预热 p50/p95 ms |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -54,7 +54,7 @@ answerable 分母为 90；无答案题单列。请求 top-k=10 时每条返回 1
 
 ## provisional chunk 实验
 
-结果文件：[m9-candidate-chunking.json](../../data/reports/m9-candidate-chunking.json)。每个 chunk size 都重新创建 in-memory store、重新分块和重新摄取；overlap 固定 200。
+结果文件：`data/reports/m9-candidate-chunking.json`（本地历史产物，不随仓库分发）。每个 chunk size 都重新创建 in-memory store、重新分块和重新摄取；overlap 固定 200。
 
 | chunk size | chunks | Hit@5 | Recall@5 |
 |---:|---:|---:|---:|
