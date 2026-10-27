@@ -1,93 +1,64 @@
 # RAG-Forge
 
-可评测的检索增强问答引擎：语义分块 + 稠密/BM25 混合检索 + RRF 融合 + CrossEncoder 重排 + 证据驱动生成（不足即拒答）+ 量化评测。
+Python/FastAPI 编写的 RAG 原型：文档分块、embedding、Dense/BM25 检索、RRF 融合、可选 CrossEncoder 与 OpenAI-compatible 生成。
 
-- **技术栈**：Python 3.11 · FastAPI · Qdrant(或 InMemory) · sentence-transformers(bge) · rank_bm25 · CrossEncoder 重排 · pytest
-- **数据/模型全部可选开源**：本地 `BAAI/bge-m3` 嵌入 + `bge-reranker` 重排，离线可用、零 API 费用。
+## 分支与状态
 
-## 目录结构
+文档核对：2026-10-27。本页对应 `main` 中的早期 API 代码，代码基线为 `abdd77a`，包版本为 `0.1.0`。旧提交标题中的“v1.0”不作为正式发布验收依据。
 
-```text
-rag-forge/
-├── src/ragforge/
-│   ├── config.py / models.py / embeddings.py / vectorstore.py / generator.py / pipeline.py
-│   ├── ingest/        # 解析、语义分块
-│   ├── retriever/     # 稠密、BM25、RRF 融合、重排
-│   ├── evaluation/    # Hit@K/Recall@K/MRR + 忠实度代理指标
-│   ├── api/           # FastAPI
-│   └── observability/ # 结构化日志 + trace
-├── scripts/           # fetch_data / ingest_docs / run_eval / smoke
-├── tests/             # 单元测试（离线）
-├── data/raw/docs/     # 知识库语料（放入 md/txt/pdf/html）
-├── docker-compose.yml + Dockerfile
-└── .env.example
+[本地 RAG 开发分支](https://github.com/Caser-86/RAG-Forge/tree/codex/local-rag-m0)另有 Ollama、Web UI、Trace 和 benchmark 等实现；这些功能没有合并到当前 `main`。本机未提交的后续整改也不随本次文档更新发布。
+
+本次只核对文档与已提交源码，没有重新运行本分支的模型、Docker 或质量评测。旧 README 的 MLQA 数字已移至[历史记录](docs/reports/legacy-mlqa-evaluation.md)，不能用作当前质量或发布指标。
+
+## 代码范围
+
+| 路径 | 作用 |
+|---|---|
+| `src/ragforge/ingest/` | 文档解析和字符分块 |
+| `embeddings.py`、`vectorstore.py` | local/API/deterministic embedding 与 InMemory/Qdrant |
+| `retriever/` | Dense、BM25、RRF 与重排 |
+| `pipeline.py`、`generator.py` | 问答编排与生成 |
+| `api/main.py` | `/ask`、`/query`、`/ingest`、`/health` |
+| `scripts/` | 数据获取、摄入、兼容评测和 smoke |
+
+本分支没有 `/api/chat`、`/api/ready`、原生 Web UI、PDF 独立 worker 或开发分支的发布门禁脚本。配置字段必须以本分支 `config.py` 为准。
+
+## 安装与离线 smoke（Windows PowerShell）
+
+```powershell
+python -m venv .venv
+$python = ".\.venv\Scripts\python.exe"
+& $python -m pip install -e ".[dev]"
+$env:RAG_VECTOR_STORE = "in_memory"
+& $python -m scripts.smoke
 ```
 
-## 快速开始
+Python 元数据声明 `>=3.10`，不表示所有版本/平台均已完整测试。smoke 显式选择 deterministic、关闭重排并清空生成 key；上面的存储环境变量用于避免已有配置把 smoke 指向 Qdrant。
 
-```bash
-python -m venv .venv && source .venv/Scripts/activate   # Windows
-pip install -e ".[local,dev]"                           # 含本地 bge 嵌入
-cp .env.example .env                                    # 按需填 LLM key（可选）
+若使用真实本地 embedding/重排，安装 `.[local,dev]` 并提前下载模型；Qdrant 还需 `vector` extra。默认类配置为 InMemory、local embedding、OpenAI-compatible 生成；`RAG_` 环境变量和 cwd 的 `.env` 会覆盖默认值。
 
-# 1) 拉取评测子集（MLQA 英-中）
-python -m scripts.fetch_data --mlqa 100
+需要创建配置时先保护已有文件：
 
-# 2) 摄入语料（把科技文档放入 data/raw/docs/ 后）
-python -m scripts.ingest_docs data/raw/docs
-
-# 3) 离线 smoke（不依赖网络/模型，验证链路）
-python -m scripts.smoke
-
-# 4) 评测：检索层指标 + 检索策略消融
-python -m scripts.run_eval data/raw/mlqa_en_zh.jsonl 10
-
-# 5) 启动 API
-uvicorn ragforge.api.main:app --reload
-
-# 6) 或 Docker 一键起（Qdrant + API；模型挂载宿主机 modelscope 缓存，见 docker-compose.yml）
-docker compose up --build
-#    服务地址：API http://localhost:8001（宿主机 8000 常被 Docker 内部占用，已改映射 8001）
-#    qdrant  http://localhost:6333
+```powershell
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
-## 评测指标（如实记录）
+API key 和模型服务地址由使用者配置，不提交 `.env` 或模型缓存。
 
-- 检索层：`Hit@K` / `Recall@K` / `MRR`
-- 生成层：`faithfulness` / `citation_support`（当前为**确定性 token 覆盖代理**，标注为参考值；权威评测请用 RAGAS）
-- 消融：`纯稠密 vs 稠密+BM25(RRF) vs +重排`、分块大小 x 召回 x 延迟
+## API 使用
 
-> 原则：用真实跑出的数字说话，不虚报；离线回生成器仅用于检索演示，不计入生成层评测。
+```powershell
+& $python -m uvicorn ragforge.api.main:app --host 127.0.0.1 --port 8000
+```
 
-## 数据来源（开源/开放，个人用途）
+`GET /health` 查看进程响应，`POST /ingest` 接收文件路径，`POST /query` 检索，`POST /ask` 问答。InMemory 的 CLI 与 API 是两个独立进程，需向实际服务进程摄入后再检索。该早期入口没有开发分支的完整认证和路径隔离实现，仅适合受信本机实验。
 
-- **评测集**：`xtreme/MLQA.en.zh`（HuggingFace）、BEIR、MS MARCO
-- **语料**：arXiv(AI/ML，open-access)、开源项目文档（MIT/Apache）——放 `data/raw/docs/`
-- **模型**：`BAAI/bge-m3`、`BAAI/bge-reranker-base`（北京智源，开源）
+`docker-compose.yml` 含宿主模型缓存挂载配置，需要先改成目标机器的实际路径；不是可直接跨机器复用的部署文件。默认宿主端口为 API 8001、Qdrant 6333，运行前检查配置、认证和网络暴露范围。
 
-## 评测结果（真实跑出，本地 bge-m3 + bge-reranker 重排 + 火山方舟 glm-5.3-flash）
+## 评测与许可
 
-> 数据：`MLQA.en.zh`（英文问题 + 中文长文段）取 100 条；按唯一 context 去重为 80 篇文档，每问以其所属文档为检索目标。评测命令：
-> `python -m scripts.run_eval data/raw/mlqa_en_zh.jsonl 10`
+Hit/Recall/MRR 描述检索；token 覆盖形式的 faithfulness/citation_support 是代理指标，不能等同于事实正确率。raw reranker 分数不是已校准概率，拒答比例不能证明反幻觉能力。正式质量需固定数据、模型与代码身份并人工审核。
 
-| 阶段 | 指标 | dense_only | hybrid(+BM25/RRF) |
-|---|---|---|---|
-| 检索层 | Hit@10 | 0.94 | 0.94 |
-| 检索层 | Recall@10 | 0.94 | 0.94 |
-| 检索层 | MRR | 0.86 | 0.86 |
-| 生成层 | faithfulness（确定性 token 覆盖代理） | 0.11 | — |
-| 生成层 | citation_support（代理） | 0.11 | — |
-| 生成层 | refusal_rate | 0.45 | — |
+仓库不随附完整数据和模型；open-access、本地运行与第三方材料的分发许可是不同问题。`pyproject.toml` 含 MIT 声明，但本次核对未发现根 LICENSE，正式分发前需由权利人确认文本及范围。
 
-说明：
-- **检索层**：80 篇文档单文档命中，Hit/Recall@10=0.94、MRR=0.86。该口径下纯稠密 vs 混合差异不显著——bge-m3 稠密召回已覆盖正确文档，BM25 在无专用名词的跨语言问句上未带来额外增益。
-- **生成层 0.11 为代理指标**（答案 token 被证据覆盖比例）：对短摘答型 MLQA 偏严、且拒答样本按 0 计入均值，是近似值，不代表真实忠实度；权威评测用 RAGAS 语义化指标。
-- **refusal_rate 0.45 是启用重排后的真实表现**：bge-reranker 输出语义相关性分（0~1），低于阈值 0.15 即拒答。相较未重排时（仅按“是否有命中”粗判、几乎不拒答），反幻觉约束显著增强——证据不足时宁可不答、不硬编。
-
-## 路线图（MVP）
-
-- [x] M1 摄取闭环（解析+分块+embedding+入库）
-- [x] M2 检索基线（稠密 + 指标）
-- [x] M3 混合检索（BM25/RRF，含消融脚本）
-- [x] M4 生成+拒答+引用（方舟 LLM 实测）
-- [x] M5 工程化收尾：完成 bge-reranker 重排、扩大评测样本至 100 条、落地 Docker
+技术讲解见[演示与限制](INTERVIEW_GUIDE.md)。
