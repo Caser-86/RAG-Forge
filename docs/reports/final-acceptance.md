@@ -6,7 +6,8 @@
 
 - 已提交本地 RAG、Ollama 模型路由、混合检索、Web UI、Trace、候选 benchmark 和审核工具。
 - 此基线 `benchmarks/golden.jsonl` 为空，根 LICENSE 与 `benchmarks/golden-split.json` 缺失。
-- 本次仅核对源码、文件树与文档，没有重跑该分支 pytest、模型、浏览器、Docker 或服务；不报告新的运行 PASS。
+- 本次手工核对源码、文件树与文档；文档推送触发的 [GitHub CI](https://github.com/Caser-86/RAG-Forge/actions/runs/40445285523) 在 Dependency audit 步骤失败，pip-audit 对 3 个包报告 18 条告警：certifi 2026.7.22、pypdf 6.18.1、urllib3 2.7.0。此为具体运行的审计结果，不是完整可利用性评估。
+- 本次未手动运行该分支模型、浏览器、Docker 或用户服务；不能宣称最终 CI/安全门禁通过。
 - 本地后续实现的 readiness、PDF 独立 worker、更新恢复与安全硬化未随此次文档提交发布，不能引用本地 628 项通过作为该提交的测试结果。
 
 ## 后续验收

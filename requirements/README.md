@@ -2,6 +2,8 @@
 
 > 本文锁文件和安装记录对应源码基线 `a14db8e`。2026-10-27 仅整理文档，未重新安装或审计本分支锁；本机后续的版本/hash 加固不属于此分支。
 
+2026-10-27 推送触发的 [CI 依赖审计](https://github.com/Caser-86/RAG-Forge/actions/runs/40445285523) 已失败：certifi 2026.7.22、pypdf 6.18.1、urllib3 2.7.0 共 18 条告警。下文“已通过”只指历史安装/依赖一致性验证，不能代表当前漏洞审计通过。锁文件需单独整改；本次文档提交未修改它们。
+
 `windows-vector-dev-py314-piptools.txt` 是使用 `pip-tools 7.6.1` 在 Windows、Python 3.14 环境中从 `pyproject.toml` 解析 `vector` 与 `dev` extras 生成的锁文件；按该文件新建环境安装后已通过 `pip check` 和离线 pytest。它用于复现当前验证环境，不代表 Python 3.10/3.11 或其他平台的通用锁文件，也不包含项目自身的 editable 安装行。
 
 另外，`windows-local-py314-piptools.txt` 与 `windows-collector-py314-piptools.txt` 已分别从 `pyproject.toml` 解析出 `local` 和 `collector` extras，并在独立 Python 3.14 临时环境中完成安装、`pip check` 与关键模块导入验证。`docker-py311-piptools.txt` 使用与 Dockerfile 一致的 CPU Torch 源生成，并在全新 Python 3.11 容器中完成按锁安装、`pip check` 和关键模块导入验证。
