@@ -1,6 +1,6 @@
 # M9 Golden Set 与实验说明
 
-`candidates.jsonl` 是从当前本地已处理技术文档按固定规则生成的 100 条候选题，分布为：基础 20、定义 15、关键词 15、改写 15、跨语言 15、跨文档 10、无答案 10。候选题包含 `corpus_identity`、`index_identity`、来源路径和生成方法，全部标记为 `review_status: candidate`。
+2026-10-27 文档核对：此分支保留 100 条历史候选，其来源/索引身份应在正式审核前重新确认；不能当作当前活动语料已冻结。历史分布为：基础 20、定义 15、关键词 15、改写 15、跨语言 15、跨文档 10、无答案 10。候选题包含 `corpus_identity`、`index_identity`、来源路径和生成方法，全部标记为 `review_status: candidate`。
 
 `golden.jsonl` 预留给人工审核后的冻结集，目前为空。没有真实审核者、审核时间和审核记录时，评测脚本会拒绝把候选题当作 Golden Set；这不是失败吞掉，而是保护分母和结论真实性。
 
@@ -24,7 +24,7 @@
 
 - 检索指标按 `document_id` 去重，answerable 题单独作为 Hit/Recall/MRR 分母；无答案题单列。
 - 每题保存预测、证据、模型、索引身份、耗时和失败/跳过状态。
-- 未运行、零引用、模型失败和 reranker 不可用不会伪装成 0% 或 100% 的成功率。
+- 正式报告需要披露未运行、错误、超时、零引用和 reranker 不可用；本代码基线应重新核对失败汇总与分母，不能套用本机后续修复的行为。
 - `--allow-candidate` 只用于管线试运行，输出必须标注 provisional，不能作为 Golden 结果。
 - 生成实验支持 `--checkpoint path.json`；每完成一道题就原子写入。恢复时会严格比较 dataset、corpus/index identity、模型 digest 和 temperature/num_predict/seed/timeout，身份变化必须使用新 checkpoint。
 
