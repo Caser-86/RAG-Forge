@@ -2,7 +2,7 @@
 
 > 历史审计记录：下列发现和“当前实现”对应原审计日期及源码基线 `a14db8e`。2026-10-27 仅整理文档，未重做安全审计；本机后续硬化不属于此分支。
 
-2026-10-27 更新：[GitHub CI](https://github.com/Caser-86/RAG-Forge/actions/runs/40445285523) 对当前远端 Windows 锁报告 3 个包、18 条依赖告警；certifi/pypdf/urllib3 的具体版本与原始审计输出见该次 Dependency audit。该结果尚未修复；下列旧审计不能用于宣称当前依赖无已知漏洞。
+2026-10-27 更新：旧 Windows 锁的 18 条告警及 local/Docker 的 filelock 告警已通过版本更新处理；四份锁重新查询无已知漏洞。详见[依赖整改记录](docs/reports/dependency-remediation-2026-10-27.md)。此结论仅覆盖锁内包版本的已知公告，不表示完整安全审计或正式发布通过；下列内容仍为历史安全审计。
 
 复核日期：2026-09-19。本文是安全审计快照；发布前仍需在目标部署 profile 上重新核验。
 

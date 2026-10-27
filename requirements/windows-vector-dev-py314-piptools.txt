@@ -17,7 +17,7 @@ anyio==4.15.1
     #   watchfiles
 beautifulsoup4==4.15.0
     # via rag-forge (pyproject.toml)
-certifi==2026.7.22
+certifi==2026.10.19
     # via
     #   httpcore
     #   httpx
@@ -91,7 +91,7 @@ pydantic-settings==2.15.0
     # via rag-forge (pyproject.toml)
 pygments==2.21.0
     # via pytest
-pypdf==6.18.1
+pypdf==6.21.2
     # via rag-forge (pyproject.toml)
 pytest==9.1.1
     # via
@@ -137,7 +137,7 @@ typing-inspection==0.4.4
     #   fastapi
     #   pydantic
     #   pydantic-settings
-urllib3==2.7.0
+urllib3==2.8.0
     # via qdrant-client
 uvicorn[standard]==0.52.4
     # via rag-forge (pyproject.toml)

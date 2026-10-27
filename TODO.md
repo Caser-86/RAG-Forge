@@ -2,7 +2,7 @@
 
 核对日期：2026-10-27。适用源码基线 `a14db8e`；本地有尚未提交的进一步整改，不能将其完成状态套用于本分支。
 
-- [ ] 处理 [2026-10-27 CI 依赖审计](https://github.com/Caser-86/RAG-Forge/actions/runs/40445285523) 对 certifi 2026.7.22、pypdf 6.18.1、urllib3 2.7.0 报告的 18 条告警；修复前核对兼容性并重跑对应平台测试。本地新锁版本不同，不能直接套用其审计结论。
+- [x] 修复原 Windows CI 的 18 条依赖告警，并更新 local/Docker 中 filelock；四锁复查无已知漏洞，见[依赖整改记录](docs/reports/dependency-remediation-2026-10-27.md)。GitHub 当前提交 CI 仍须确认。
 - [ ] 权利人确认代码与第三方分发范围，补齐根 LICENSE 并核对元数据。
 - [ ] 确认稳定语料/索引身份，核对或重新生成候选，真实审核者完成 100 题 Golden。
 - [ ] 冻结 calibration 20 / test 80 split，在查看 test 输出前确定配置、模型 digest、硬件与阈值。

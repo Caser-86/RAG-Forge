@@ -10,7 +10,7 @@
 
 当前分支有 `/api/chat`、`/api/models`、`/api/health`、`/api/traces/{trace_id}` 与静态 UI；没有后续本地整改中的 `/api/ready` 或 PDF 独立 worker。本次未手动运行该分支的模型、浏览器或容器，历史 PASS 只保留为带日期证据。
 
-2026-10-27 文档推送触发的 [CI](https://github.com/Caser-86/RAG-Forge/actions/runs/40445285523) 在 Dependency audit 步骤失败：远端旧锁的 `certifi 2026.7.22`、`pypdf 6.18.1`、`urllib3 2.7.0` 共被 pip-audit 报告 18 条告警。该结果需要后续依赖修复，不能写成安全门禁通过；本次只改文档，未升级依赖。
+2026-10-27 依赖修复：四份运行锁已更新 certifi 2026.10.19、pypdf 6.21.2、urllib3 2.8.0，以及 local/Docker 中的 filelock 4.2.1（各包仅在原锁存在时更新）。四锁已重新查询 PyPI/OSV，未发现已知漏洞；远端旧代码副本的离线测试为 243 passed、2 skipped。此提交的 GitHub CI 仍须单独确认，不能将本机结果写成远端通过。见[依赖整改记录](docs/reports/dependency-remediation-2026-10-27.md)。
 
 [项目上下文](CONTEXT.md)描述本分支模块，[TODO](TODO.md)汇总后续事项，[验收摘要](docs/reports/final-acceptance.md)说明当前证据范围，[文档索引](docs/README.md)提供操作与历史导航。
 
