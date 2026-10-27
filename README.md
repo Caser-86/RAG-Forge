@@ -6,7 +6,7 @@ Python/FastAPI 编写的 RAG 原型：文档分块、embedding、Dense/BM25 检�
 
 文档核对：2026-10-27。本页对应 `main` 中的早期 API 代码，代码基线为 `abdd77a`，包版本为 `0.1.0`。旧提交标题中的“v1.0”不作为正式发布验收依据。
 
-[本地 RAG 开发分支](https://github.com/Caser-86/RAG-Forge/tree/codex/local-rag-m0)另有 Ollama、Web UI、Trace 和 benchmark 等实现；这些功能没有合并到当前 `main`。本机未提交的后续整改也不随本次文档更新发布。
+[本地 RAG 开发分支](https://github.com/Caser-86/RAG-Forge/tree/codex/local-rag-m0)另有 Ollama、Web UI、Trace 和 benchmark 等实现；这些功能没有合并到当前 `main`。本机未提交的后续整改也不随本次文档更新发布。2026-10-27 的依赖修复和成功 CI 仅适用于开发分支，见[该分支验收摘要](https://github.com/Caser-86/RAG-Forge/blob/codex/local-rag-m0/docs/reports/final-acceptance.md)，不能外推为 main 已通过审计或适合部署。
 
 本次只核对文档与已提交源码，没有重新运行本分支的模型、Docker 或质量评测。旧 README 的 MLQA 数字已移至[历史记录](docs/reports/legacy-mlqa-evaluation.md)，不能用作当前质量或发布指标。
 
