@@ -1,5 +1,7 @@
 # RAG-Forge 后续推进计划（2026-09-19）
 
+> 历史记录：保留原日期、命令、版本和阶段结论，仅用于溯源；不作为当前安装指南或待办。现行状态见[验收摘要](../../reports/final-acceptance.md)。
+
 > **For agentic workers:** 后续使用 superpowers:executing-plans 在当前任务逐项推进。修复遵循先复现、再测试、再最小修改；本轮仅规划，不执行实现。
 
 **Goal:** 收尾 R1 的评测可信性缺口，完成真实 Golden 审核，再进入正式评测与本地交付。

@@ -4,13 +4,13 @@
 
 ## 状态与版本
 
-文档核对：2026-10-27。此分支的代码基线为 `a14db8e`，包版本 `0.1.0`；属于本地 Beta，尚未完成正式发布验收。[main](https://github.com/Caser-86/RAG-Forge/tree/main) 保留早期 API 原型。
+文档核对：2026-10-27。此分支的功能基线为 `a14db8e`，另有依赖修复 `7dc6f22`，包版本 `0.1.0`；属于本地 Beta，尚未完成正式发布验收。[main](https://github.com/Caser-86/RAG-Forge/tree/main) 保留早期 API 原型。
 
 本机有基于此提交的未提交工程整改；本次仅更新 GitHub 文档，未将这些代码上传。因此本地工作树测试数量、PDF 隔离、readiness 与后续安全修复不能视为本分支能力。
 
 当前分支有 `/api/chat`、`/api/models`、`/api/health`、`/api/traces/{trace_id}` 与静态 UI；没有后续本地整改中的 `/api/ready` 或 PDF 独立 worker。本次未手动运行该分支的模型、浏览器或容器，历史 PASS 只保留为带日期证据。
 
-2026-10-27 依赖修复：四份运行锁已更新 certifi 2026.10.19、pypdf 6.21.2、urllib3 2.8.0，以及 local/Docker 中的 filelock 4.2.1（各包仅在原锁存在时更新）。四锁已重新查询 PyPI/OSV，未发现已知漏洞；远端旧代码副本的离线测试为 243 passed、2 skipped。依赖修复提交 `7dc6f22` 的 [GitHub CI](https://github.com/Caser-86/RAG-Forge/actions/runs/40459161031) 已通过（243 passed、2 skipped，wheel 与依赖审计通过）。见[依赖整改记录](docs/reports/dependency-remediation-2026-10-27.md)。
+2026-10-27 依赖修复及对应 GitHub CI 已通过；验证范围统一见[验收摘要](docs/reports/final-acceptance.md)，版本与四锁查询见[依赖整改记录](docs/reports/dependency-remediation-2026-10-27.md)。这不表示目标部署、真实模型或正式质量验收通过。
 
 [项目上下文](CONTEXT.md)描述本分支模块，[TODO](TODO.md)汇总后续事项，[验收摘要](docs/reports/final-acceptance.md)说明当前证据范围，[文档索引](docs/README.md)提供操作与历史导航。
 

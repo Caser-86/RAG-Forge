@@ -1,5 +1,7 @@
 # 项目综合审查与成品化实施计划
 
+> 历史记录：保留原日期、命令、版本和阶段结论，仅用于溯源；不作为当前安装指南或待办。现行状态见[验收摘要](../../reports/final-acceptance.md)。
+
 > **For agentic workers:** 后续按 TASK 顺序使用 superpowers:executing-plans 或 superpowers:subagent-driven-development 执行；本文件只交付第一阶段审查与规划，不授权发布、删除用户数据或提交现有全部改动。
 
 **Goal:** 将 RAG-Forge 推进为 Windows 原生、本地优先、数据可靠、可复现验收的单用户技术资料问答产品。

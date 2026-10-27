@@ -1,5 +1,7 @@
 # RAG-Forge 全本地改造详细执行计划
 
+> 历史记录：保留原日期、命令、版本和阶段结论，仅用于溯源；不作为当前安装指南或待办。现行状态见[验收摘要](../../reports/final-acceptance.md)。
+
 > **For agentic workers:** Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. 一次只执行一个 M 阶段，完成验收后停止，等待用户决定是否进入下一阶段。
 
 **Goal:** 在现有 RAG-Forge 上构建 Windows 原生、Ollama 驱动、知识库持久化、可增量采集、可追溯和可评测的本地 RAG 系统。

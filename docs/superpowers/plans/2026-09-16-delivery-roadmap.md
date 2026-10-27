@@ -1,5 +1,7 @@
 # RAG-Forge 后续交付执行计划表
 
+> 历史记录：保留原日期、命令、版本和阶段结论，仅用于溯源；不作为当前安装指南或待办。现行状态见[验收摘要](../../reports/final-acceptance.md)。
+
 > **For agentic workers:** 执行时使用 superpowers:executing-plans，按任务逐项验证；涉及代码修复先使用 systematic-debugging 与 test-driven-development。本文件是规划，不代表已执行。
 
 **Goal:** 在保留用户现有工作和数据的前提下，完成可信评测、持久化运行验收和可复现交付，明确区分“本地可用”与“允许正式发布”。

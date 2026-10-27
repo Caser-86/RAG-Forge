@@ -1,5 +1,7 @@
 # RAG-Forge Project Audit and Cleanup Implementation Plan
 
+> 历史记录：保留原日期、命令、版本和阶段结论，仅用于溯源；不作为当前安装指南或待办。现行状态见[验收摘要](../../reports/final-acceptance.md)。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 在不删除用户工作成果和不改变公开问答接口的前提下，修复已确认的正确性、安全性和可维护性问题，并清理明确的临时产物。

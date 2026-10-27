@@ -1,13 +1,14 @@
 # RAG-Forge 文档索引（已提交开发基线）
 
-核对日期：2026-10-27。本页对应源码基线 `a14db8e`；本机未提交的后续整改与本分支分开记录。
+核对日期：2026-10-27。本页对应功能基线 `a14db8e` 及依赖修复 `7dc6f22`；本机未提交的后续整改与本分支分开记录。
 
 ## 现行入口与操作
 
 - [README](../README.md)：分支范围、安装与运行边界。
 - [CONTEXT](../CONTEXT.md)：模块与配置。
 - [TODO](../TODO.md)：尚未完成事项。
-- [验收范围](reports/final-acceptance.md)：本次文档核对与发布缺口。
+- [验收摘要](reports/final-acceptance.md)：已通过 CI、未运行项目与发布缺口。
+- [依赖整改](reports/dependency-remediation-2026-10-27.md)：版本更新、四锁查询及安装边界。
 - [本地部署](LOCAL-SETUP.md)、[开发验证](DEVELOPMENT.md)、[Demo](DEMO.md)：按此分支实际脚本使用。
 - [备份恢复](BACKUP-RESTORE.md)、[索引迁移](INDEX-MIGRATION.md)、[发布清单](RELEASE.md)。
 - [评测说明](../benchmarks/README.md)：candidate、审核、split 与实验；历史候选不等于 Golden。

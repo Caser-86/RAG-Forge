@@ -4,9 +4,14 @@
 
 ## 1. 安装与配置
 
+以下锁安装使用 Windows/Python 3.14；其他平台见[依赖说明](../requirements/README.md)。
+
 ```powershell
+python -m venv .venv
 $python = ".\.venv\Scripts\python.exe"
-& $python -m pip install -e ".[vector,dev]"
+& $python -m pip install -r requirements/windows-vector-dev-py314-piptools.txt
+& $python -m pip install --no-deps .
+& $python -m pip check
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
@@ -40,7 +45,8 @@ Invoke-WebRequest http://127.0.0.1:6333/readyz -UseBasicParsing
 将 `.md`、`.txt`、`.pdf` 或 `.html` 放入 `data/raw/docs/`。模型名、backend、维度、digest 或分块算法发生变化时，先执行候选重建：
 
 ```powershell
-& $python -m scripts.reindex data/raw/docs --collection rag_forge_rebuild_20260912
+$candidate = "rag_forge_rebuild_" + (Get-Date -Format "yyyyMMddHHmmss")
+& $python -m scripts.reindex data/raw/docs --collection $candidate
 ```
 
 候选集合名必须不存在；重建脚本会在第一次写入前拒绝 active/旧集合。成功后才写入 schema 2 manifest，旧集合不会自动删除。旧 manifest 或缺少 provider digest 时，不要通过复制文件强行绕过兼容性检查；应记录 provider 的真实 revision 到 `RAG_EMBEDDER_DIGEST` 后重新索引。
