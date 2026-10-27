@@ -13,7 +13,7 @@
 - 四份运行锁逐份执行 `pip-audit --no-deps --disable-pip --strict`：PyPI provider 均退出 0，无已知漏洞。
 - Docker 的 CPU Torch `2.14.0+cpu` 不在 PyPI；只将它单独映射到上游 `torch==2.14.0`，用 OSV 查询退出 0。其余 71 个包仍逐个查询，没有排除 Torch 风险检查。
 - 对远端源码的隔离副本执行离线 pytest：243 passed、2 skipped（未启用 live Ollama）。Ruff 与 mypy 通过。
-- 验证环境是本机 Windows/Python 3.14，使用已升级包的现有环境，不等同于四 profile 的全新完整安装。当前提交 GitHub CI 会独立执行 Windows 锁安装、lint、类型检查、测试、wheel 和依赖审计；是否通过须查该提交的实际运行。
+- 验证环境是本机 Windows/Python 3.14，使用已升级包的现有环境，不等同于四 profile 的全新完整安装。当前提交 GitHub CI 会独立执行 Windows 锁安装、lint、类型检查、测试、wheel 和依赖审计；该修复提交的 [CI 40459161031](https://github.com/Caser-86/RAG-Forge/actions/runs/40459161031) 已成功结束：243 passed、2 skipped，coverage 命令报告 84%（该远端旧配置包含测试代码，不能与本地 source/scripts 覆盖率混用），wheel 构建与依赖审计均通过。
 
 ## 边界
 

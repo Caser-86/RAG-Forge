@@ -20,4 +20,4 @@ Python 元数据声明 >=3.10；默认类配置为 Qdrant Local、Ollama bge-m3�
 
 持久化、备份与索引迁移见[操作手册](docs/LOCAL-SETUP.md)、[迁移](docs/INDEX-MIGRATION.md)、[恢复](docs/BACKUP-RESTORE.md)。InMemory 跨进程不共享；Qdrant Local 不能让独立写入进程随意并发占用。
 
-本分支处于 Beta。人工 Golden、冻结 split、权利人许可证及正式质量/部署验收尚未完成。历史测试和模型结果见[历史验收](docs/reports/final-acceptance-history-2026-09-19.md)；此前旧锁的 18 条告警已按[依赖整改记录](docs/reports/dependency-remediation-2026-10-27.md)处理，当前提交 CI 以 GitHub 实际结果为准。当前汇总见[验收摘要](docs/reports/final-acceptance.md)。
+本分支处于 Beta。人工 Golden、冻结 split、权利人许可证及正式质量/部署验收尚未完成。历史测试和模型结果见[历史验收](docs/reports/final-acceptance-history-2026-09-19.md)；此前旧锁的 18 条告警已按[依赖整改记录](docs/reports/dependency-remediation-2026-10-27.md)处理，修复提交 `7dc6f22` 的 [GitHub CI](https://github.com/Caser-86/RAG-Forge/actions/runs/40459161031) 已通过。当前汇总见[验收摘要](docs/reports/final-acceptance.md)。

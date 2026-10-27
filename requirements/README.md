@@ -1,6 +1,6 @@
 # 依赖锁文件
 
-> 2026-10-27 依赖整改：此前旧锁 CI 报告的 18 条告警已更新对应版本；另修复 local/Docker 的 filelock。四份运行锁的重新查询均未发现已知漏洞。此提交 CI 需以 GitHub 实际结果为准；本分支仍没有本机未提交的哈希锁与 PDF worker 改造。
+> 2026-10-27 依赖整改：此前旧锁 CI 报告的 18 条告警已更新对应版本；另修复 local/Docker 的 filelock。四份运行锁的重新查询均未发现已知漏洞。修复提交 `7dc6f22` 的 [GitHub CI](https://github.com/Caser-86/RAG-Forge/actions/runs/40459161031) 已通过；本分支仍没有本机未提交的哈希锁与 PDF worker 改造。
 
 更新目标：certifi 2026.10.19、pypdf 6.21.2、urllib3 2.8.0、filelock 4.2.1（仅更新原锁存在的包）。pyproject 的 pypdf 下限同步为 6.21.2。测试与审计边界见[依赖整改记录](../docs/reports/dependency-remediation-2026-10-27.md)。
 
